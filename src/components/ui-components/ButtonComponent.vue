@@ -14,8 +14,4 @@ const props = defineProps(
 </template>
 
 <style scoped>
-    button{
-        border-radius: 4px;
-        border: 1px solid #FFF;
-    }
 </style>

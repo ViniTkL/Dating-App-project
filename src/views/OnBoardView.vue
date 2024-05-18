@@ -39,8 +39,8 @@ const carrouselText = [{
     </el-carousel>
   
     <div class="on-board-login">
-      <ButtonComponent title="Create an account" />
-      <p>Already have an account? Sign In</p>
+      <ButtonComponent class="login-btn" title="Create an account" />
+      <p class="login-text">Already have an account? <RouterLink to="/"> Sign In </RouterLink></p>
     </div>
 </div>
 </template>
@@ -58,10 +58,15 @@ const carrouselText = [{
   }
   img.item-image{
     height: 50%;
-    width: 100%;
+    width: fit-content;
+    align-self: center;
   }
 
   .on-board-container{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    gap: 30px;
     padding: 10px;
     height: 100vh;
     width: 100%;
@@ -71,17 +76,43 @@ const carrouselText = [{
   .on-board-login{
     display: flex;
     flex-flow: column wrap;
+    gap: 20px;
     align-items: center;
     justify-content: center;
   }
 
-  .on-board-login > button{
+  .login-btn{
     width: 75%;
     height: 56px;
+    background-color: #E94057;
+    border: 1px solid #E94057;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #FFFFFF;
+  }
+
+  .login-text{
+    color: #323755;
+  }
+
+  .login-text >  a.router-link-exact-active {
+    color: #E94057;
+  }
+
+  .login-text >  a.router-link-exact-active:hover{
+    background-color: transparent;
   }
 
   .el-carousel, .el-carousel__item{
+    display: flex;
+    flex-flow: column wrap;
     height: 500px;
+  }
+
+  .el-carousel__item.is-active{
+    display: flex;
+    flex-flow: column wrap;
+    gap: 20px;
   }
 
   .el-carousel__container{
@@ -100,6 +131,11 @@ const carrouselText = [{
   .el-carousel__indicator.is-active > button{
     background-color: #E94057;
     border: 1px solid #E94057;
+  }
 
+  @media(min-width: 1024px){    
+    .login-btn{
+      width: 24%;
+    }
   }
 </style>
