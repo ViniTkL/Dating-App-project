@@ -106,7 +106,7 @@ const carrouselText = [{
     color: #E94057;
   }
 
-  .login-text >  a.router-link-exact-active:hover{
+  .login-text >  a:hover{
     background-color: transparent;
   }
 
