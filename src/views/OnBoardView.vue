@@ -1,6 +1,9 @@
 <script setup>
 import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const carrouselText = [{
   title: "Algorithm",
@@ -25,6 +28,10 @@ const carrouselText = [{
   const isCurrentIndex = (index) => {
     return index == currentIndex.value
   }
+
+  const goToLogin = () => {
+    router.push('/sign-up')
+  }
   
 </script>
 
@@ -39,8 +46,8 @@ const carrouselText = [{
     </el-carousel>
   
     <div class="on-board-login">
-      <ButtonComponent class="login-btn" title="Create an account" />
-      <p class="login-text">Already have an account? <RouterLink to="/"> Sign In </RouterLink></p>
+      <ButtonComponent class="login-btn" title="Create an account"  @click="goToLogin()"/>
+      <p class="login-text">Already have an account? <RouterLink to="/sign-in"> Sign In </RouterLink></p>
     </div>
 </div>
 </template>
@@ -95,7 +102,7 @@ const carrouselText = [{
     color: #323755;
   }
 
-  .login-text >  a.router-link-exact-active {
+  .login-text > a{
     color: #E94057;
   }
 
