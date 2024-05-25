@@ -1,10 +1,17 @@
 <script setup>
 import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
 import { ref } from 'vue';
-import { Calendar, CameraFilled } from "@element-plus/icons-vue"
+import { Calendar, CameraFilled, DArrowLeft, ArrowLeftBold, ArrowRightBold, DArrowRight } from "@element-plus/icons-vue"
 
 const firstName = ref('');
 const lastName = ref('');
+const bdayDate = ref(new Date());
+const calendar = ref('')
+const isCalendarOpen = ref(false)
+
+const selectDate = (val) => {
+    calendar.value.selectDate(val)
+}
 
 const onConfirm = () => {
     if(firstName.value.length === 0 || lastName.value.length ===0 ){
@@ -14,24 +21,55 @@ const onConfirm = () => {
 </script>
 
 <template> 
-    <main class="profile-detail-container">
+<main>
+    <form class="profile-detail-container" :class="{unfocused: isCalendarOpen}">
             <h2>Profile Details</h2>
             <div class="user-profile-picture">
                 <img class="user-image"  src="../assets/onboard-image-03.png" alt="foto">
                 <label for="user-image"><el-icon><CameraFilled /></el-icon></label>
                 <input type="file" name="user-image" id="user-image">
             </div>
-            <div class="profile-info">
+            <div class="profile-info" >
                 <label for="first-name">First name</label>
                 <input type="text" name="first-name" id="first-name" v-model="firstName" required>
 
                 <label for="last-name">Last name</label>
                 <input type="text" name="last-name" id="last-name" v-model="lastName"  required>
 
-                <button><el-icon><Calendar /></el-icon></button>
+                <div class="bday-btn" @click="isCalendarOpen = true" >
+                    <el-icon :size="30"><Calendar /></el-icon> 
+                    <span>Choose birthday date</span> 
+                </div>
+
             </div>
+            <div class="calendar-container" v-if="isCalendarOpen">
+                        <el-calendar ref="calendar" v-model="bdayDate" >
+                            <template #header="{ date }">
+                                <span>Birthday</span>
+                            <el-button-group>
+                                <el-button size="small" @click="selectDate('prev-year')">
+                                    <el-icon><DArrowLeft /></el-icon>
+                                </el-button>
+                                <el-button size="small" @click="selectDate('prev-month')">
+                                    <el-icon><ArrowLeftBold /></el-icon>
+                                </el-button>
+                                <el-button size="small"><span>{{ date }}</span></el-button>
+                                
+                                <el-button size="small" @click="selectDate('next-month')">
+                                    <el-icon><ArrowRightBold /></el-icon>
+                                </el-button>
+                                <el-button size="small" @click="selectDate('next-year')">
+                                    <el-icon><DArrowRight /></el-icon>
+                                </el-button>
+                            </el-button-group>
+                            </template>
+                        </el-calendar>
+
+                        <ButtonComponent title="Save" @click="isCalendarOpen = false"/>
+                    </div>
             <ButtonComponent title="Confirm" @click="onConfirm()" />
-    </main>
+    </form>
+</main>
 </template>
 
 <style scoped>
@@ -46,7 +84,7 @@ const onConfirm = () => {
 }
 
 .profile-detail-container h2{
-    font-weight: 400;
+    font-weight: 700;
     font-size: 36px;
     text-align: left;
     color:#000000;
@@ -64,6 +102,7 @@ const onConfirm = () => {
 .user-profile-picture .user-image{
     height: 120px;
     width: 120px;
+    border-radius: 24px
 }
 
 .user-profile-picture input{
@@ -97,12 +136,14 @@ const onConfirm = () => {
 
 .profile-info  label{
     color:#00000066;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     background-color: #FFFFFF;
     position: relative;
     top: 10px;
-    right: 90px;
+    right: 88px;
+    width: 78px;
+    text-align: center;
 }
 
 .profile-info input{
@@ -114,6 +155,47 @@ const onConfirm = () => {
     outline: none;
     font-size: 14px;
     font-weight: 400;
+}
+
+.bday-btn{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: #ffc2ca;
+    width: 75%;
+    border: 1px solid #ffc2ca;
+    border-radius: 10px;
+    height: 60px;
+    margin-top: 22px;
+    padding: 10px;
+    color: #E94057;
+}
+
+.bday-btn span{
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.calendar-container{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    position: fixed;
+    bottom: 0px;
+    background: #FFFFFF;
+    padding: 8px;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
+}
+
+.calendar-container .el-calendar{
+    color: #E94057;
+}
+
+.unfocused{
+    background: #555555;
 }
 
 </style>
