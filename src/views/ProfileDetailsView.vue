@@ -2,22 +2,36 @@
 import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
 import { ref } from 'vue';
 import { Calendar, CameraFilled, DArrowLeft, ArrowLeftBold, ArrowRightBold, DArrowRight } from "@element-plus/icons-vue"
+import {useUserStore} from "@/stores/user"
 
-const firstName = ref('');
-const lastName = ref('');
-const bdayDate = ref(new Date());
-const calendar = ref('')
-const isCalendarOpen = ref(false)
+const store =  useUserStore();
+
+const calendar = ref('');
+const isCalendarOpen = ref(false);
 
 const selectDate = (val) => {
     calendar.value.selectDate(val)
 }
 
-const onConfirm = () => {
-    if(firstName.value.length === 0 || lastName.value.length ===0 ){
-        alert("Por favor, insira uma nome e sobrenome válidos")
-    }
+const formatDate = (date) => {
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 }
+
+// todo - salvar essas informações no backenderson quando estiver pronto, também ver como salvar a porcaria da foto
+const onConfirm = () => {
+    if(store.firstName.length === 0 || store.lastName.length ===0 ){
+        alert(`Por favor, insira uma nome e sobrenome válidos`)
+        return
+    }else if(!store.bdayDate){
+        alert("Por favor, Selecione sua data de nascimento");
+        return
+    }
+
+    const formattedBdayDate = formatDate(store.bdayDate)
+    alert(`${store.firstName} - ${store.lastName} - ${formattedBdayDate}`)
+}
+
+
 </script>
 
 <template> 
@@ -31,10 +45,10 @@ const onConfirm = () => {
             </div>
             <div class="profile-info" >
                 <label for="first-name">First name</label>
-                <input type="text" name="first-name" id="first-name" v-model="firstName" required>
+                <input type="text" name="first-name" id="first-name" v-model="store.firstName" required>
 
                 <label for="last-name">Last name</label>
-                <input type="text" name="last-name" id="last-name" v-model="lastName"  required>
+                <input type="text" name="last-name" id="last-name" v-model="store.lastName"  required>
 
                 <div class="bday-btn" @click="isCalendarOpen = true" >
                     <el-icon :size="30"><Calendar /></el-icon> 
@@ -43,7 +57,7 @@ const onConfirm = () => {
 
             </div>
             <div class="calendar-container" v-if="isCalendarOpen">
-                        <el-calendar ref="calendar" v-model="bdayDate" >
+                        <el-calendar ref="calendar" v-model="store.bdayDate" >
                             <template #header="{ date }">
                                 <span>Birthday</span>
                             <el-button-group>
@@ -53,8 +67,7 @@ const onConfirm = () => {
                                 <el-button size="small" @click="selectDate('prev-month')">
                                     <el-icon><ArrowLeftBold /></el-icon>
                                 </el-button>
-                                <el-button size="small"><span>{{ date }}</span></el-button>
-                                
+                                <el-button size="small" class="bday-date-show" disabled><span>{{ date }}</span></el-button>
                                 <el-button size="small" @click="selectDate('next-month')">
                                     <el-icon><ArrowRightBold /></el-icon>
                                 </el-button>
@@ -72,7 +85,7 @@ const onConfirm = () => {
 </main>
 </template>
 
-<style scoped>
+<style >
 .profile-detail-container{
     display: flex;
     flex-flow: column wrap;
@@ -96,7 +109,7 @@ const onConfirm = () => {
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
-    margin-bottom: -130px;
+    margin-bottom: -100px;
 }
 
 .user-profile-picture .user-image{
@@ -192,6 +205,40 @@ const onConfirm = () => {
 
 .calendar-container .el-calendar{
     color: #E94057;
+}
+
+.el-calendar__header{
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 12px 20px;
+}   
+
+.el-calendar__header > span {
+    color: #000000;
+}
+
+.el-button{
+    border: none;
+}
+
+.el-button:hover{
+  border: 1px solid #E94057;
+  border-radius: 50%;
+  background-color: #E94057;
+  color: #FFFFFF;
+  transition: all ease-in-out 180ms;
+}
+
+.bday-date-show, .bday-date-show.is-disabled{
+    color: #E94057; 
+    font-size: 20px;
+}
+
+.bday-date-show:hover{
+    border: none;
+    background: #FFFFFF;
 }
 
 .unfocused{
