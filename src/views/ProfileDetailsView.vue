@@ -3,8 +3,10 @@ import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
 import { ref } from 'vue';
 import { Calendar, CameraFilled, DArrowLeft, ArrowLeftBold, ArrowRightBold, DArrowRight } from "@element-plus/icons-vue"
 import {useUserStore} from "@/stores/user"
+import { useRouter } from 'vue-router';
 
 const store =  useUserStore();
+const router = useRouter();
 
 const calendar = ref('');
 const isCalendarOpen = ref(false);
@@ -29,6 +31,7 @@ const onConfirm = () => {
 
     const formattedBdayDate = formatDate(store.bdayDate)
     alert(`${store.firstName} - ${store.lastName} - ${formattedBdayDate}`)
+    router.push('/i-am')
 }
 
 
