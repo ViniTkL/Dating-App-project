@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', () => {
     const firstName = ref('');
     const lastName = ref('');
     const bdayDate = ref();
+    const gender = ref('')
 
-  return { firstName, lastName, bdayDate }
+  return { firstName, lastName, bdayDate, gender }
 })
