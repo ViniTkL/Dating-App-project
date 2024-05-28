@@ -4,6 +4,7 @@ import LoginView from '@/views/SigninView.vue'
 import SingupView from '@/views/SingupView.vue'
 import ProfileDetailsView from '@/views/ProfileDetailsView.vue'
 import IamView from "@/views/IamView.vue"
+import passionsView from "@/views/passionsView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/i-am',
       name: 'i-am',
       component: IamView
+    },
+    {
+      path: '/passions',
+      name: 'passions',
+      component: passionsView
     }
   ]
 })
