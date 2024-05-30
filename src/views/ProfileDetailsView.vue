@@ -30,7 +30,6 @@ const onConfirm = () => {
     }
 
     const formattedBdayDate = formatDate(store.bdayDate)
-    alert(`${store.firstName} - ${store.lastName} - ${formattedBdayDate}`)
     router.push('/i-am')
 }
 
@@ -47,6 +46,13 @@ const onConfirm = () => {
                 <input type="file" name="user-image" id="user-image">
             </div>
             <div class="profile-info" >
+
+                <label for="email" class="email-label">Email</label>
+                <input type="email" name="email" id="email" v-model="store.email" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" v-model="store.password" required>
+                
                 <label for="first-name">First name</label>
                 <input type="text" name="first-name" id="first-name" v-model="store.firstName" required>
 
@@ -143,6 +149,7 @@ const onConfirm = () => {
     color: #FFFFFF;
 }
 
+
 .profile-info{
     display: flex;
     align-items: center;
@@ -160,6 +167,10 @@ const onConfirm = () => {
     right: 88px;
     width: 78px;
     text-align: center;
+}
+
+.profile-info label.email-label{
+    width: 50px;
 }
 
 .profile-info input{

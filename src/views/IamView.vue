@@ -3,7 +3,7 @@ import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
 import {useUserStore} from "@/stores/user"
 import { useRouter } from 'vue-router';
 import { Select } from "@element-plus/icons-vue"
-import GoBackButton from '@/components/ui-components/GoBackButton.vue'
+import GoBackButton from '@/components/ui-components/VIconButton.vue'
 
 const store = useUserStore();
 const router = useRouter();
@@ -36,7 +36,7 @@ const goToNextPage = () => {
             <label for="another">Another<el-icon><Select /></el-icon></label>
         </div>
     </form>
-    <ButtonComponent title="Continue" @click="goToNextPage()"/>
+    <ButtonComponent title="Continue" @click.prevent="goToNextPage()"/>     
     
 </main>
 </template>
@@ -48,6 +48,7 @@ h2{
     right: 100px;
     font-size: 34px;
     font-weight: 700;
+    color: #000000;
 }
 
 .iam-container{
@@ -56,6 +57,7 @@ h2{
     align-items: center;
     justify-content: space-evenly;
     height: 100vh;
+    background-color: #FFFFFF;
 }
 
 .go-back{
@@ -87,6 +89,11 @@ h2{
     text-align: left;
     font-size: 16px;
     font-weight: 700;
+    color: #000000;
+}
+
+.iam-choices div > label .el-icon{
+    align-self: center;
 }
 
 .iam-choices div > input:checked + label {
