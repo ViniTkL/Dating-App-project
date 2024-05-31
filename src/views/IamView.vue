@@ -20,7 +20,7 @@ const goToNextPage = () => {
 
 <template>
 <main class="iam-container">
-    <GoBackButton class="go-back" @click="goToPreviousPage()" />
+    <GoBackButton icon="fa-angle-left" class="go-back" @click="goToPreviousPage()" />
     <h2>I am a</h2>
     <form class="iam-choices">
         <div>

@@ -32,7 +32,7 @@ const setPassionSelected = (passion, isSelected) => {
 
 <template>
 <main class="passions-container">
-    <GoBackButton @click="goToPreviousPage()" class="go-back-button"/>
+    <GoBackButton icon="fa-angle-left" @click="goToPreviousPage()" class="go-back-button"/>
 
     
     <header class="passions-header">
