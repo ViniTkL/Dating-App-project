@@ -1,9 +1,9 @@
 <script setup>
-import { ArrowLeft } from "@element-plus/icons-vue"
+    const props = defineProps(['icon'])
 </script>
 
 <template>
-<button ><el-icon><ArrowLeft /></el-icon></button>
+<button ><font-awesome-icon :icon=icon /></button>
 </template>
 
 <style scoped> 

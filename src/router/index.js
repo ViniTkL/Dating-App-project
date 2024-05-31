@@ -5,10 +5,16 @@ import SingupView from '@/views/SingupView.vue'
 import ProfileDetailsView from '@/views/ProfileDetailsView.vue'
 import IamView from "@/views/IamView.vue"
 import passionsView from "@/views/passionsView.vue"
+import MainView from '@/views/MainView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      name: 'main',
+      component: MainView
+    },
     {
       path: '/on-board',
       name: 'on-board',
