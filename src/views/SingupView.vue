@@ -1,12 +1,20 @@
 <script setup>
     import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+
+    const goToNextPage = () => {
+        router.push('/profile-details')
+    }
+
 </script>
 
 <template>
 <main class="sing-up-container">
     <img src="../assets/trademark.png" class="app-logo">
     <h1>Sign up to continue</h1>
-    <ButtonComponent title="Continue with email" />
+    <ButtonComponent title="Continue with email" @click="goToNextPage"/>
     <div class="sing-up-footer">
         <a>Terms of use</a>
         <a>Privacy Policy</a>
