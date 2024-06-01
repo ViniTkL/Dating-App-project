@@ -52,6 +52,7 @@ const goToHome = () => {
     align-items: center;
     justify-content: space-evenly;
     padding: 14px 0 14px 0;
+    overflow: hidden;
 }
 
 .card-1 {
