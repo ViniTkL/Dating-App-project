@@ -149,8 +149,14 @@ h1{
     background-color: #E8E6EA;
   }
 
+  .discover-content ul.el-carousel__indicators{
+    background-color: #FFFFFF26;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+  }
+
   .discover-content ul.el-carousel__indicators.el-carousel__indicators--vertical.el-carousel__indicators--right{
-    right: 55px;
+    right: 58px;
   }
 
   .discover-content .el-carousel__indicator.is-active > button{

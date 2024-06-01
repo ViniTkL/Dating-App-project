@@ -20,5 +20,7 @@ export const useUserStore = defineStore('user', () => {
         passions.value.push(passion)
     }
 
-  return { firstName, lastName, bdayDate, gender, email, password, passions, passionSelected }
+    const getUserFullName = () =>  `${firstName.value} ${lastName.value}`
+
+  return { firstName, lastName, bdayDate, gender, email, password, passions, passionSelected, getUserFullName }
 })
