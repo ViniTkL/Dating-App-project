@@ -1,6 +1,7 @@
 <script setup>
 import VIconButton from '@/components/ui-components/VIconButton.vue';
 import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
+import VCardItem from '@/components/ui-components/VCardItem.vue';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
 
@@ -16,15 +17,17 @@ const goToHome = () => {
 
 <template>
 <main class="match-container">
-    <div class="card-1">
+
+    <VCardItem class="card-1">
         <VIconButton class="card-1-btn" icon="fa-solid fa-heart"/>
         <img class="card-1-img" src="" alt="">
-    </div>
-    
-    <div class="card-2">
+    </VCardItem>
+
+    <VCardItem class="card-2">
         <img class="card-2-img" src="" alt="">
         <VIconButton class="card-2-btn" icon="fa-solid fa-heart"/>
-    </div>
+    </VCardItem>
+
 
     <div class="match-header">
         <h2>{{`It’s a match, ${store.getUserFullName()} !`}}</h2>
@@ -49,13 +52,6 @@ const goToHome = () => {
     align-items: center;
     justify-content: space-evenly;
     padding: 14px 0 14px 0;
-}
-
-.card-1, .card-2{
-    display: flex;
-    flex-flow: column wrap;
-    width: 100%;
-    align-items: center;
 }
 
 .card-1 {
