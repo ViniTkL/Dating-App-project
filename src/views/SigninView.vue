@@ -11,7 +11,7 @@ const email = ref('');
 const password = ref('');
 
 const goToNextPage = () => {
-    router.push('/');
+    router.push('/home');
 }
 
 const logIn = () => {

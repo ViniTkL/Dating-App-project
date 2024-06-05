@@ -39,7 +39,7 @@ const onConfirm = () => {
 
     saveUser()
 
-    router.push('/i-am')
+    router.push('/profile-details/i-am')
 }
 
 const saveUser = () => {

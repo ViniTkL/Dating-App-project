@@ -9,19 +9,24 @@ import MainView from '@/views/MainView.vue'
 import MatchView from '@/views/MatchView.vue'
 import MatchesView from "@/views/MatchesView.vue"
 import HomeView from '@/views/HomeView.vue'
+import Profile from '@/views/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'main',
-      component: MainView
-    },
-    {
       path: '/home',
-      name: 'home',
-      component: HomeView
+      component: HomeView,
+      children: [  
+        {
+          path: '',
+          component: MainView
+        },
+        {
+          path: 'matches',
+          component: MatchesView
+        }
+      ]
     },
     {
       path: '/on-board',
@@ -40,29 +45,27 @@ const router = createRouter({
     },
     {
       path: '/profile-details',
-      name: 'profile-details',
-      component: ProfileDetailsView
-    },
-    {
-      path: '/i-am',
-      name: 'i-am',
-      component: IamView
-    },
-    {
-      path: '/passions',
-      name: 'passions',
-      component: passionsView
+      component: Profile,
+      children: [
+        {
+          path: '',
+          component: ProfileDetailsView
+        },
+        {
+          path: 'i-am',
+          component: IamView
+        },
+        {
+          path: 'passions',
+          component: passionsView
+        }
+      ]
     },
     {
       path: '/match',
       name: 'match',
       component: MatchView
     },
-    {
-      path: '/matches',
-      name: 'matches',
-      component: MatchesView
-    }
   ]
 })
 

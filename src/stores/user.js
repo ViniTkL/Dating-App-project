@@ -18,17 +18,14 @@ export const useUserStore = defineStore('user', () => {
     
     const saveUser = (userInfo) => {
       user.value = userInfo
-      console.log('aoba', user.value);
     }
     
     const saveGender = (userGender) => {
       user.value.gender = userGender
-      console.log('aoba', user);
     }
     
     const savePassions = () => {
         user.value.passions = passions.value;
-        console.log('aoba', user);
     }
    
     const getUserFullName = () =>  `${firstName.value} ${lastName.value}`

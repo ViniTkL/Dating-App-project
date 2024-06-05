@@ -18,11 +18,11 @@ const finishSingUp = () => {
 }
 
 const goToNextPage = () => {
-    router.push('/')
+    router.push('/home')
 }
 
 const goToPreviousPage = () => {
-    router.push('/i-am')
+    router.push('/profile-details/i-am')
 }
 
 

@@ -1,29 +1,44 @@
 <script setup>
 import MainView from '@/views/MainView.vue'
 import MatchesView from "@/views/MatchesView.vue"
-import { onMounted } from 'vue';
+import { onMounted, computed, ref } from 'vue';
+import {  RouterView, useRouter } from 'vue-router'
+
+const router = useRouter();
+
+
+
+const goTo = (route) => {
+  if(route == 'discover'){
+    router.push('/home')
+  }else if(route == 'matches'){
+    router.push('/home/matches')
+  }
+}
 
 </script>
 
 
 <template>
   <main class="home-container">
-  <el-tabs  class="menu-tabs" tab-position="bottom" type="border-card">
-      <el-tab-pane>
+
+    <router-view />
+
+
+  <el-tabs  class="menu-tabs" tab-position="bottom" type="border-card" @tab-change="goTo">
+      <el-tab-pane name="discover">
         <template #label>
           <span class="tabs-label">
             <font-awesome-icon class="nav-icons" icon='fa-solid fa-clone' />
           </span>
         </template>
-        <MainView class="main-component"/>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="matches">
         <template #label>
           <span class="tabs-label">
             <font-awesome-icon class="nav-icons" icon='fa-solid fa-heart' />
           </span>
         </template>
-        <MatchesView />
       </el-tab-pane>
       <el-tab-pane>
         <template #label>
@@ -31,7 +46,6 @@ import { onMounted } from 'vue';
             <font-awesome-icon class="nav-icons" icon='fa-solid fa-user-large' />
           </span>
         </template>
-        Role
       </el-tab-pane>
     </el-tabs>
   </main>

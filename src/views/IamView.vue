@@ -16,7 +16,7 @@ const goToPreviousPage = () => {
 }
 
 const goToNextPage = () => {
-    router.push('/passions')
+    router.push('/profile-details/passions')
 }
 
 const saveUser = () => {
