@@ -37,7 +37,7 @@ const carrouselText = [{
 
 <template>
   <div class="on-board-container">
-    <el-carousel type="card" :autoplay="false" trigger="click" @change="(newIndex) => currentIndex = newIndex">
+    <el-carousel  :autoplay="false" trigger="click" @change="(newIndex) => currentIndex = newIndex">
       <el-carousel-item v-for="(item, index) in carrouselText" :key="item.title">
         <img  :src="item.image" alt="" class="item-image">
         <h2 v-if="isCurrentIndex(index)" class="item-title">{{ item.title }}</h2>

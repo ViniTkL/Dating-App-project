@@ -3,12 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', () => {
 
-    const firstName = ref('');
-    const lastName = ref('');
-    const bdayDate = ref();
-    const gender = ref('')
-    const email = ref('');
-    const password = ref('');
+    const user = ref({}) 
     const passions = ref([]);
 
     const passionSelected = (passion, isSelected) => {
@@ -20,7 +15,20 @@ export const useUserStore = defineStore('user', () => {
         passions.value.push(passion)
     }
 
+    
+    const saveUser = (userInfo) => {
+      user.value = userInfo
+    }
+    
+    const saveGender = (userGender) => {
+      user.value.gender = userGender
+    }
+    
+    const savePassions = () => {
+        user.value.passions = passions.value;
+    }
+   
     const getUserFullName = () =>  `${firstName.value} ${lastName.value}`
 
-  return { firstName, lastName, bdayDate, gender, email, password, passions, passionSelected, getUserFullName }
+  return { passions, passionSelected, getUserFullName, saveUser, saveGender, savePassions }
 })
