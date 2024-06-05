@@ -8,6 +8,7 @@ import passionsView from "@/views/passionsView.vue"
 import MainView from '@/views/MainView.vue'
 import MatchView from '@/views/MatchView.vue'
 import MatchesView from "@/views/MatchesView.vue"
+import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,11 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: MainView
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: HomeView
     },
     {
       path: '/on-board',

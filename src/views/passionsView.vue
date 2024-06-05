@@ -12,8 +12,9 @@ const store = useUserStore();
 
 
 const finishSingUp = () => {
-    goToNextPage();
+    store.savePassions();
     //salnvar informações no banco de dados :)
+    goToNextPage();
 }
 
 const goToNextPage = () => {

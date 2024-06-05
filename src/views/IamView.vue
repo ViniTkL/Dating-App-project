@@ -1,4 +1,5 @@
 <script setup>
+import {ref} from 'vue'
 import ButtonComponent from '@/components/ui-components/ButtonComponent.vue';
 import {useUserStore} from "@/stores/user"
 import { useRouter } from 'vue-router';
@@ -8,12 +9,19 @@ import GoBackButton from '@/components/ui-components/VIconButton.vue'
 const store = useUserStore();
 const router = useRouter();
 
+const gender = ref('');
+
 const goToPreviousPage = () => {
     router.push('/profile-details')
 }
 
 const goToNextPage = () => {
     router.push('/passions')
+}
+
+const saveUser = () => {
+    store.saveGender(gender.value)
+    goToNextPage()
 }
 
 </script>
@@ -24,19 +32,19 @@ const goToNextPage = () => {
     <h2>I am a</h2>
     <form class="iam-choices">
         <div>
-            <input type="radio" value="womam" name="gender" id="womam" v-model="store.gender">
+            <input type="radio" value="womam" name="gender" id="womam" v-model="gender">
             <label for="womam">Womam<el-icon><Select /></el-icon></label>
         </div>
         <div>
-            <input type="radio" value="man" name="gender" id="man" v-model="store.gender">
+            <input type="radio" value="man" name="gender" id="man" v-model="gender">
             <label for="man">Man<el-icon><Select /></el-icon></label>
         </div>
         <div>
-            <input type="radio" value="another" name="gender" id="another" v-model="store.gender">
+            <input type="radio" value="another" name="gender" id="another" v-model="gender">
             <label for="another">Another<el-icon><Select /></el-icon></label>
         </div>
     </form>
-    <ButtonComponent title="Continue" @click.prevent="goToNextPage()"/>     
+    <ButtonComponent title="Continue" @click.prevent="saveUser()"/>     
     
 </main>
 </template>

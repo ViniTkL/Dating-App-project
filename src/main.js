@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBagShopping, faCamera, faMicrophone, faFireBurner, faDumbbell, faPalette, faWineGlass, faMusic, faGamepad, faPersonSwimming, faPersonRunning, faParachuteBox, faGlobe, faAngleRight, faAngleLeft, faFilter, faStar, faHeart, faXmark, faArrowDownUpAcrossLine, faClone, faUserLarge} from '@fortawesome/free-solid-svg-icons'
 import { faHornbill } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faCamera, faBagShopping, faMicrophone, faFireBurner,faDumbbell, faPalette, faWineGlass, faMusic, faGamepad, faPersonSwimming, faPersonRunning, faParachuteBox, faGlobe, faHornbill, faAngleRight, faAngleLeft, faFilter, faStar, faHeart, faXmark, faArrowDownUpAcrossLine, faClone, faUserLarge)
+library.add(faCamera, faBagShopping, faMicrophone, faFireBurner,faDumbbell, faPalette, faWineGlass, faMusic, faGamepad, faPersonSwimming, faPersonRunning, faParachuteBox, faGlobe, faHornbill, faAngleRight, faAngleLeft, faFilter, faStar, faHeart, faXmark, faArrowDownUpAcrossLine, faClone, faUserLarge, faClone)
 
 const app = createApp(App)
 

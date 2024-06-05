@@ -7,6 +7,18 @@ const router = useRouter();
 const goToPreviousPage = () => {
     router.push('/on-board');
 }
+
+const like = () => {
+
+}
+
+const superLike = () => {
+
+}
+
+const dismiss = () => {
+
+}
 </script>
 
 
@@ -22,24 +34,23 @@ const goToPreviousPage = () => {
     </header>
     <div class="discover-content">
         <el-carousel
-            height="500px"
+            height="300px"
             direction="vertical"
             :autoplay="false"
     >
         <el-carousel-item v-for="item in 4" :key="item">
-            <img class="user-img" src="../assets/onboard-image-02.png" alt="" height="250px">
+            <img class="user-img" src="../assets/onboard-image-02.png" alt="">
             <div class="user-info">
                 <p>name, age ,{{ item }}</p>
                 <span>Profession</span>
             </div>
-            <div class="blur-bg">a</div>
         </el-carousel-item>
     </el-carousel>
     </div>
     <div class="discover-buttons">
-        <VIconButton class="cancel-button" icon="fa-solid fa-xmark"/>
-        <VIconButton class="like-button" icon="fa-solid fa-heart"/>
-        <VIconButton class="super-like-button" icon="fa-solid fa-star"/>
+        <VIconButton class="cancel-button" icon="fa-solid fa-xmark" @click="dismiss"/>
+        <VIconButton class="like-button" icon="fa-solid fa-heart" @click="like"/>
+        <VIconButton class="super-like-button" icon="fa-solid fa-star" @click="superLike"/>
     </div>
 
 </main>
@@ -96,7 +107,6 @@ h1{
 }
 
 .discover-content img{
-    width: 295px;
     height: 350px;
     border-radius: 16px;
 }
@@ -124,7 +134,7 @@ h1{
     position: relative;
     bottom: 80px;
     background-color: transparent;
-    width: 295px;
+    width: 226px;
     height: 60px;
     border-bottom-right-radius: 16px;
     border-bottom-left-radius: 16px;
@@ -160,12 +170,11 @@ h1{
 
   .discover-content ul.el-carousel__indicators{
     background-color: #FFFFFF26;
-    border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
+    border-radius: 16px;
   }
 
   .discover-content ul.el-carousel__indicators.el-carousel__indicators--vertical.el-carousel__indicators--right{
-    right: 14%;
+    right: 20%
   }
 
   .discover-content .el-carousel__indicator.is-active > button{
@@ -176,7 +185,7 @@ h1{
 .discover-buttons{
     display: flex;
     justify-content: space-evenly;
-    width: 100%;
+    width: 80%;
 }
 
 .discover-buttons > .cancel-button{

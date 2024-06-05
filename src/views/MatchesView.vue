@@ -70,7 +70,6 @@ import VIconButton from '@/components/ui-components/VIconButton.vue';
     flex-wrap: wrap;
     align-items: center;
     gap: 10px 0;
-    padding: 28px;
 }
 
 .match-card{
