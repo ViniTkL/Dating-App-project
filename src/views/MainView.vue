@@ -25,7 +25,6 @@ const goToPreviousPage = () => {
             height="500px"
             direction="vertical"
             :autoplay="false"
-            type="card" 
     >
         <el-carousel-item v-for="item in 4" :key="item">
             <img class="user-img" src="../assets/onboard-image-02.png" alt="" height="250px">
@@ -67,6 +66,11 @@ h1{
     justify-content: space-around;
     align-items: center;
     padding: 8px;
+    margin-top: 22px;
+}
+
+.discover-header > button{
+    width: 52px;
 }
 
 .header-text{
@@ -95,6 +99,11 @@ h1{
     width: 295px;
     height: 350px;
     border-radius: 16px;
+}
+
+.el-carousel__container{
+    position: relative;
+    top: 80px;
 }
 
 .el-carousel__item{
@@ -156,7 +165,7 @@ h1{
   }
 
   .discover-content ul.el-carousel__indicators.el-carousel__indicators--vertical.el-carousel__indicators--right{
-    right: 58px;
+    right: 14%;
   }
 
   .discover-content .el-carousel__indicator.is-active > button{
