@@ -8,6 +8,14 @@ import { useRouter } from 'vue-router';
 const store =  useUserStore();
 const router = useRouter();
 
+const userInfos = ref({
+    email: '',
+    bdayDate: new Date(),
+    password: '',
+    firstName: '',
+    lastName: '',
+});
+
 const calendar = ref('');
 const isCalendarOpen = ref(false);
 
@@ -21,16 +29,22 @@ const formatDate = (date) => {
 
 // todo - salvar essas informações no backenderson quando estiver pronto, também ver como salvar a porcaria da foto
 const onConfirm = () => {
-    if(store.firstName.length === 0 || store.lastName.length ===0 ){
+    if(userInfos.value.firstName.length === 0 || userInfos.value.lastName.length ===0 ){
         alert(`Por favor, insira uma nome e sobrenome válidos`)
         return
-    }else if(!store.bdayDate){
+    }else if(!userInfos.value.bdayDate){
         alert("Por favor, Selecione sua data de nascimento");
         return
     }
 
-    const formattedBdayDate = formatDate(store.bdayDate)
-    router.push('/i-am')
+    saveUser()
+
+    router.push('/profile-details/i-am')
+}
+
+const saveUser = () => {
+     userInfos.value.bdayDate = formatDate(userInfos.value.bdayDate)
+     store.saveUser(userInfos.value)
 }
 
 
@@ -41,23 +55,23 @@ const onConfirm = () => {
     <form class="profile-detail-container" :class="{unfocused: isCalendarOpen}">
             <h2>Profile Details</h2>
             <div class="user-profile-picture">
-                <img class="user-image"  src="../assets/onboard-image-03.png" alt="foto">
+                <img class="user-image"  src="" alt="foto">
                 <label for="user-image"><el-icon><CameraFilled /></el-icon></label>
                 <input type="file" name="user-image" id="user-image">
             </div>
             <div class="profile-info" >
 
                 <label for="email" class="email-label">Email</label>
-                <input type="email" name="email" id="email" v-model="store.email" required>
+                <input type="email" name="email" id="email" v-model="userInfos.email" required>
 
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" v-model="store.password" required>
+                <input type="password" name="password" id="password" v-model="userInfos.password" required>
                 
                 <label for="first-name">First name</label>
-                <input type="text" name="first-name" id="first-name" v-model="store.firstName" required>
+                <input type="text" name="first-name" id="first-name" v-model="userInfos.firstName" required>
 
                 <label for="last-name">Last name</label>
-                <input type="text" name="last-name" id="last-name" v-model="store.lastName"  required>
+                <input type="text" name="last-name" id="last-name" v-model="userInfos.lastName"  required>
 
                 <div class="bday-btn" @click="isCalendarOpen = true" >
                     <el-icon :size="30"><Calendar /></el-icon> 
@@ -66,7 +80,7 @@ const onConfirm = () => {
 
             </div>
             <div class="calendar-container" v-if="isCalendarOpen">
-                        <el-calendar ref="calendar" v-model="store.bdayDate" >
+                        <el-calendar ref="calendar" v-model="userInfos.bdayDate" >
                             <template #header="{ date }">
                                 <span>Birthday</span>
                             <el-button-group>
@@ -124,7 +138,8 @@ const onConfirm = () => {
 .user-profile-picture .user-image{
     height: 120px;
     width: 120px;
-    border-radius: 24px
+    border-radius: 24px;
+    border: 1px solid #555555
 }
 
 .user-profile-picture input{

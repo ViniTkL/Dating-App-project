@@ -12,16 +12,17 @@ const store = useUserStore();
 
 
 const finishSingUp = () => {
-    goToNextPage();
+    store.savePassions();
     //salnvar informações no banco de dados :)
+    goToNextPage();
 }
 
 const goToNextPage = () => {
-    router.push('/')
+    router.push('/home')
 }
 
 const goToPreviousPage = () => {
-    router.push('/i-am')
+    router.push('/profile-details/i-am')
 }
 
 
