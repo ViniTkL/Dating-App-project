@@ -45,19 +45,40 @@ export const useUserStore = defineStore('user', () => {
       console.log(authToken.value)
   }
     
-    const saveUser = (userInfo) => {
-      user.value = userInfo
+
+  const isNewuser = async (params) => {
+    const response = await fetch('http://localhost:3000/show-user?'  + new URLSearchParams({
+      email: params
+    }), {
+      method: 'GET',
+      headers: {
+        "Content-type": "application/json"
+      },            
+      mode: "no-cors"
+  })
+
+    const alreadyHasAnAccount = response.json
+
+    if(alreadyHasAnAccount != null){
+      return false
     }
+
+    return true
+  }
+
+  const saveUser = (userInfo) => {
+    user.value = userInfo
+  }
     
-    const saveGender = (userGender) => {
-      user.value.gender = userGender
-    }
+  const saveGender = (userGender) => {
+    user.value.gender = userGender
+  }
     
-    const savePassions = () => {
+  const savePassions = () => {
         user.value.passions = passions.value;
-    }
+  }
    
     const getUserFullName = () =>  `${firstName.value} ${lastName.value}`
 
-  return { passions, authToken, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn }
+  return { passions, authToken, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser }
 })
