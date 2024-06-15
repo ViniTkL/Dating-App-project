@@ -29,16 +29,13 @@ const formatDate = (date) => {
 
 // todo - salvar essas informações no backenderson quando estiver pronto, também ver como salvar a porcaria da foto
 const onConfirm = () => {
-    if(userInfos.value.first_name.length === 0 || userInfos.value.last_name.length ===0 ){
-        alert(`Por favor, insira uma nome e sobrenome válidos`)
-        return
-    }else if(!userInfos.value.birthday_date){
+   
+    if(!userInfos.value.birthday_date){
         alert("Por favor, Selecione sua data de nascimento");
         return
     }
     
-    
-    if(verifyPassword(userInfos.value.password)){
+    if(verifyPassword(userInfos.value.password) && isNewUser()){
         saveUser()
         router.push('/profile-details/i-am')
     }
@@ -47,6 +44,11 @@ const onConfirm = () => {
 const saveUser = () => {
      userInfos.value.birthday_date = formatDate(userInfos.value.birthday_date)
      store.saveUser(userInfos.value)
+}
+
+const isNewUser = () => {
+    const isValid = store.isNewuser(userInfos.value.email);
+    return isValid;
 }
 
 const verifyPassword = (password) => {
