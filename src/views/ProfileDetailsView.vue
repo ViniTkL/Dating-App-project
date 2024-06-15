@@ -10,10 +10,10 @@ const router = useRouter();
 
 const userInfos = ref({
     email: '',
-    bdayDate: new Date(),
+    birthday_date: new Date(),
     password: '',
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
 });
 
 const calendar = ref('');
@@ -29,24 +29,65 @@ const formatDate = (date) => {
 
 // todo - salvar essas informações no backenderson quando estiver pronto, também ver como salvar a porcaria da foto
 const onConfirm = () => {
-    if(userInfos.value.firstName.length === 0 || userInfos.value.lastName.length ===0 ){
+    if(userInfos.value.first_name.length === 0 || userInfos.value.last_name.length ===0 ){
         alert(`Por favor, insira uma nome e sobrenome válidos`)
         return
-    }else if(!userInfos.value.bdayDate){
+    }else if(!userInfos.value.birthday_date){
         alert("Por favor, Selecione sua data de nascimento");
         return
     }
-
-    saveUser()
-
-    router.push('/profile-details/i-am')
+    
+    
+    if(verifyPassword(userInfos.value.password)){
+        saveUser()
+        router.push('/profile-details/i-am')
+    }
 }
 
 const saveUser = () => {
-     userInfos.value.bdayDate = formatDate(userInfos.value.bdayDate)
+     userInfos.value.birthday_date = formatDate(userInfos.value.birthday_date)
      store.saveUser(userInfos.value)
 }
 
+const verifyPassword = (password) => {
+    let lowerCaseQuantity = 0;
+    let upperCaseQuantity = 0;
+    let numberQuantity = 0;
+    let specialCharacterQuantity = 0;
+
+
+    for( let char of password ){
+
+        if(isNumber(char)){
+            numberQuantity += 1;
+        }else if(isLowerCase(char)){
+            lowerCaseQuantity += 1;
+        }else if(isUpperCase(char)){
+            upperCaseQuantity += 1;
+        }else{
+            specialCharacterQuantity += 1;
+        }
+    }
+    
+    if(lowerCaseQuantity>=1 && upperCaseQuantity>=1 && numberQuantity>=1 && specialCharacterQuantity>= 1){
+        return true
+    }
+
+    alert('Senha inválida');
+    return false
+}
+
+const isNumber = (password) => {
+    return password.match(/[0-9]/i);
+}
+
+const isLowerCase = (password) => {
+    return password.match(/[a-z]/);
+}
+
+const isUpperCase = (password) => {
+    return password.match(/[A-Z]/);
+}
 
 </script>
 
@@ -65,13 +106,13 @@ const saveUser = () => {
                 <input type="email" name="email" id="email" v-model="userInfos.email" required>
 
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" v-model="userInfos.password" required>
+                <input type="password" name="password" id="password" minlength="6" v-model="userInfos.password" required>
                 
                 <label for="first-name">First name</label>
-                <input type="text" name="first-name" id="first-name" v-model="userInfos.firstName" required>
+                <input type="text" name="first-name" id="first-name" v-model="userInfos.first_name" required>
 
                 <label for="last-name">Last name</label>
-                <input type="text" name="last-name" id="last-name" v-model="userInfos.lastName"  required>
+                <input type="text" name="last-name" id="last-name" v-model="userInfos.last_name"  required>
 
                 <div class="bday-btn" @click="isCalendarOpen = true" >
                     <el-icon :size="30"><Calendar /></el-icon> 
@@ -80,7 +121,7 @@ const saveUser = () => {
 
             </div>
             <div class="calendar-container" v-if="isCalendarOpen">
-                        <el-calendar ref="calendar" v-model="userInfos.bdayDate" >
+                        <el-calendar ref="calendar" v-model="userInfos.birthday_date" >
                             <template #header="{ date }">
                                 <span>Birthday</span>
                             <el-button-group>
@@ -103,7 +144,7 @@ const saveUser = () => {
 
                         <ButtonComponent title="Save" @click="isCalendarOpen = false"/>
                     </div>
-            <ButtonComponent title="Confirm" @click="onConfirm()" />
+            <ButtonComponent title="Confirm" @click.prevent="onConfirm()" />
     </form>
 </main>
 </template>

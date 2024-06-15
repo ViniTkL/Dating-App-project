@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', () => {
 
     const user = ref({}) 
+    const authToken = ref('');
     const passions = ref([]);
 
     const passionSelected = (passion, isSelected) => {
@@ -15,6 +16,34 @@ export const useUserStore = defineStore('user', () => {
         passions.value.push(passion)
     }
 
+    const createUser = async () => {
+        await fetch('http://localhost:3000/profile-details', {
+            method: 'POST',
+            body: JSON.stringify(user.value),
+            headers: {
+              "Content-type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            },            
+        }).then( response => { console.log(response) }).catch(error => { console.log(error)})
+    }
+
+    const logIn = async (params) => {
+      const response = await fetch('http://localhost:3000/sign-in?' + new URLSearchParams({
+          username: params.email,
+          password: params.password,
+        }), {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json"
+          },            
+          mode: "no-cors"
+      }).catch(error => { 
+        console.log(error); 
+      })
+
+      authToken.value = await response.json
+      console.log(authToken.value)
+  }
     
     const saveUser = (userInfo) => {
       user.value = userInfo
@@ -30,5 +59,5 @@ export const useUserStore = defineStore('user', () => {
    
     const getUserFullName = () =>  `${firstName.value} ${lastName.value}`
 
-  return { passions, passionSelected, getUserFullName, saveUser, saveGender, savePassions }
+  return { passions, authToken, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn }
 })

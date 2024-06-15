@@ -14,11 +14,11 @@ const goToNextPage = () => {
     router.push('/home');
 }
 
-const logIn = () => {
+const logIn = async () => {
     
     //Fazer as valiações com o banco de dados
-    const isValidUser = true // vai validar a partir do banco de dados se é ou não um usuário válido
-    if(isValidUser){
+    await store.logIn({email: email.value, password: password.value}) // vai validar a partir do banco de dados se é ou não um usuário válido
+    if(store.authToken){
         goToNextPage();
     }
 

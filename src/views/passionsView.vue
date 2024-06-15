@@ -11,9 +11,10 @@ const store = useUserStore();
 
 
 
-const finishSingUp = () => {
+const finishSingUp = async () => {
     store.savePassions();
     //salnvar informações no banco de dados :)
+    await store.createUser();
     goToNextPage();
 }
 
