@@ -17,9 +17,13 @@ const goToNextPage = () => {
 const logIn = async () => {
     
     //Fazer as valiações com o banco de dados
-    await store.logIn({email: email.value, password: password.value}) // vai validar a partir do banco de dados se é ou não um usuário válido
-    if(store.authToken){
+    const isLogged = await store.logIn({email: email.value, password: password.value}).then((resp) => {
+        return resp;
+    })
+   
+    if(isLogged){
         goToNextPage();
+        return
     }
 
     alert('Email ou senha incorretos')
