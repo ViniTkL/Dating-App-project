@@ -27,18 +27,20 @@ export const useUserStore = defineStore('user', () => {
 
     const logIn = async (params) => {
       const response = await fetch('http://localhost:3000/sign-in?' + new URLSearchParams({
-          email: params.email,
+          username: params.email,
           password: params.password,
         }), {
           method: 'POST',
           headers: {
             "Content-type": "application/json"
-          }            
+          } ,
       }).catch(error => { 
         console.log(error); 
       })
 
-      authToken.value = await response.json()
+      user.value = await response.json();
+
+      return user.value.message ? false : true; 
   }
     
 
