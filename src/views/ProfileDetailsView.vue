@@ -6,6 +6,7 @@ import {useUserStore} from "@/stores/user"
 import { useRouter } from 'vue-router';
 
 const store =  useUserStore();
+
 const router = useRouter();
 
 const userInfos = ref({
@@ -16,8 +17,16 @@ const userInfos = ref({
     last_name: '',
 });
 
+const pf_picture = ref('');
+
 const calendar = ref('');
+
 const isCalendarOpen = ref(false);
+
+
+const imageUrl = ref('')
+
+
 
 const selectDate = (val) => {
     calendar.value.selectDate(val)
@@ -106,6 +115,17 @@ const isUpperCase = (password) => {
                 <img class="user-image"  src="" alt="foto">
                 <label for="user-image"><el-icon><CameraFilled /></el-icon></label>
                 <input type="file" name="user-image" id="user-image">
+
+            <!-- <el-upload
+                class="avatar-uploader"
+                action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+            >
+            <img v-if="imageUrl" :src="imageUrl" class="user-image" />
+            <label for="user-image"><el-icon><CameraFilled /></el-icon></label> 
+             </el-upload> -->
             </div>
             <div class="profile-info" >
 

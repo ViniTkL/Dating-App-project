@@ -27,14 +27,13 @@ export const useUserStore = defineStore('user', () => {
 
     const logIn = async (params) => {
       const response = await fetch('http://localhost:3000/sign-in?' + new URLSearchParams({
-          username: params.email,
+          email: params.email,
           password: params.password,
         }), {
           method: 'POST',
           headers: {
             "Content-type": "application/json"
-          },            
-          mode: "no-cors"
+          }            
       }).catch(error => { 
         console.log(error); 
       })
