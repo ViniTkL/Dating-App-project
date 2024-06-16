@@ -28,17 +28,22 @@ const formatDate = (date) => {
 }
 
 // todo - salvar essas informações no backenderson quando estiver pronto, também ver como salvar a porcaria da foto
-const onConfirm = () => {
+const onConfirm = async () => {
+    
+    const newUser = await isNewUser().then((resposta) => { return resposta})
    
     if(!userInfos.value.birthday_date){
         alert("Por favor, Selecione sua data de nascimento");
         return
     }
-    
-    if(verifyPassword(userInfos.value.password) && isNewUser()){
-        saveUser()
-        router.push('/profile-details/i-am')
+
+    if(verifyPassword(userInfos.value.password) && newUser){
+        saveUser();
+        router.push('/profile-details/i-am');
+        return 
     }
+
+    alert('Usuario já cadastrado, por favor faça o log in')
 }
 
 const saveUser = () => {
@@ -46,8 +51,8 @@ const saveUser = () => {
      store.saveUser(userInfos.value)
 }
 
-const isNewUser = () => {
-    const isValid = store.isNewuser(userInfos.value.email);
+const isNewUser =  () => {
+    const isValid =  store.isNewuser(userInfos.value.email);
     return isValid;
 }
 
