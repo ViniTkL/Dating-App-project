@@ -9,7 +9,7 @@ const store = useUserStore();
 const router = useRouter();
 
 const goToHome = () => {
-    router.push('/');
+    router.push('/home');
 }
 
 </script>
@@ -20,11 +20,11 @@ const goToHome = () => {
 
     <VCardItem class="card-1">
         <VIconButton class="card-1-btn" icon="fa-solid fa-heart"/>
-        <img class="card-1-img" src="" alt="">
+        <img class="card-1-img" src="../assets/onboard-image-03.png" alt="">
     </VCardItem>
 
     <VCardItem class="card-2">
-        <img class="card-2-img" src="" alt="">
+        <img class="card-2-img" src="../assets/teste.png" alt="">
         <VIconButton class="card-2-btn" icon="fa-solid fa-heart"/>
     </VCardItem>
 

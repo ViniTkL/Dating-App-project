@@ -14,12 +14,16 @@ const goToNextPage = () => {
     router.push('/home');
 }
 
-const logIn = () => {
+const logIn = async () => {
     
     //Fazer as valiações com o banco de dados
-    const isValidUser = true // vai validar a partir do banco de dados se é ou não um usuário válido
-    if(isValidUser){
+    const isLogged = await store.logIn({email: email.value, password: password.value}).then((resp) => {
+        return resp;
+    })
+   
+    if(isLogged){
         goToNextPage();
+        return
     }
 
     alert('Email ou senha incorretos')
