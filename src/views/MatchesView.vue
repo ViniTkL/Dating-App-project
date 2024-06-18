@@ -37,6 +37,7 @@ import VIconButton from '@/components/ui-components/VIconButton.vue';
     background-color: #FFFFFF;
     padding: 10px;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .matches-header{

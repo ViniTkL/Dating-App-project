@@ -3,13 +3,56 @@ import VIconButton from '@/components/ui-components/VIconButton.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const users = [
+    {
+        email: 'teste@gmail.com',
+        profession: 'Engineer',
+        first_name: 'Rebeca',
+        last_name: 'Sander',
+        gender:'woman',
+        passions: ["Photography", "Shopping", "Karaoke"]
+    },
+    {
+        email: 'teste2@gmail.com',
+        profession: 'Police officer',
+        first_name: 'Cleber',
+        last_name: 'Rocha',
+        gender:'man',
+        passions: ["Gym", "Drink", "Art", "Music"]
+    },
+    {
+        email: 'teste3@gmail.com',
+        profession: 'Mecanical',
+        first_name: 'Ana',
+        last_name: 'Souza',
+        gender:'woman',
+        passions: ["Gym", "Swimming", "Art", "Extreme"]
+    },
+    {
+        email: 'teste5@gmail.com',
+        profession: 'Artist',
+        first_name: 'Andressa',
+        last_name: 'Lima',
+        gender:'woman',
+        passions: ["Gym", "Swimming", "Traveling", "Extreme"]
+    },
+    {
+        email: 'teste6@gmail.com',
+        profession: 'Pilot',
+        first_name: 'Jonas',
+        last_name: 'Humberto',
+        gender:'man',
+        passions: ["Cooking", "Gym", "Traveling"]
+    }
+]
+
 
 const goToPreviousPage = () => {
     router.push('/on-board');
 }
 
 const like = () => {
-
+    router.push("/match")
 }
 
 const superLike = () => {

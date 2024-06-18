@@ -9,7 +9,7 @@ const store = useUserStore();
 const router = useRouter();
 
 const goToHome = () => {
-    router.push('/');
+    router.push('/home');
 }
 
 </script>

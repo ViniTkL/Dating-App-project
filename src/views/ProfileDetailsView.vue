@@ -15,9 +15,8 @@ const userInfos = ref({
     password: '',
     first_name: '',
     last_name: '',
+    pf_picture: ''
 });
-
-const pf_picture = ref('');
 
 const calendar = ref('');
 
@@ -105,6 +104,18 @@ const isUpperCase = (password) => {
     return password.match(/[A-Z]/);
 }
 
+const saveProfilePictue = (file) => {
+    const photo = file.target.value
+
+    console.log(photo)
+    if(photo.includes(".jpg") || photo.includes(".png")){
+        userInfos.value.pf_picture = photo;
+        return
+    }
+
+    alert('Foto de perfil inválida')
+}
+
 </script>
 
 <template> 
@@ -112,20 +123,9 @@ const isUpperCase = (password) => {
     <form class="profile-detail-container" :class="{unfocused: isCalendarOpen}">
             <h2>Profile Details</h2>
             <div class="user-profile-picture">
-                <img class="user-image"  src="" alt="foto">
+                <img class="user-image"  :src="userInfos.pf_picture" alt="foto">
                 <label for="user-image"><el-icon><CameraFilled /></el-icon></label>
-                <input type="file" name="user-image" id="user-image">
-
-            <!-- <el-upload
-                class="avatar-uploader"
-                action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
-            >
-            <img v-if="imageUrl" :src="imageUrl" class="user-image" />
-            <label for="user-image"><el-icon><CameraFilled /></el-icon></label> 
-             </el-upload> -->
+                <input type="file" name="user-image" id="user-image" @change="saveProfilePictue">
             </div>
             <div class="profile-info" >
 
