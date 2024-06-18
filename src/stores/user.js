@@ -75,5 +75,7 @@ export const useUserStore = defineStore('user', () => {
    
   const getUserFullName = () =>  `${user.value.first_name} ${user.value.last_name}`
 
-  return { passions, authToken, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser }
+  const getUser = computed(() => user.value)
+
+  return { passions, authToken, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser, getUser }
 })
