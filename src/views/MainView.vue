@@ -1,8 +1,15 @@
 <script setup>
 import VIconButton from '@/components/ui-components/VIconButton.vue';
+import userCarousel from '@/components/ui-components/userCarousel.vue';
 import { useRouter } from 'vue-router';
+import {useUserStore} from "@/stores/user"
+
+const store = useUserStore();
 
 const router = useRouter();
+
+const currentUser = store.getUser
+
 const users = [
     {
         email: 'teste@gmail.com',
@@ -10,6 +17,7 @@ const users = [
         first_name: 'Rebeca',
         last_name: 'Sander',
         gender:'woman',
+        age: 24,
         passions: ["Photography", "Shopping", "Karaoke"]
     },
     {
@@ -18,6 +26,7 @@ const users = [
         first_name: 'Cleber',
         last_name: 'Rocha',
         gender:'man',
+        age: 30,
         passions: ["Gym", "Drink", "Art", "Music"]
     },
     {
@@ -26,6 +35,7 @@ const users = [
         first_name: 'Ana',
         last_name: 'Souza',
         gender:'woman',
+        age: 25,
         passions: ["Gym", "Swimming", "Art", "Extreme"]
     },
     {
@@ -34,6 +44,7 @@ const users = [
         first_name: 'Andressa',
         last_name: 'Lima',
         gender:'woman',
+        age: 22,
         passions: ["Gym", "Swimming", "Traveling", "Extreme"]
     },
     {
@@ -42,6 +53,7 @@ const users = [
         first_name: 'Jonas',
         last_name: 'Humberto',
         gender:'man',
+        age: 23,
         passions: ["Cooking", "Gym", "Traveling"]
     }
 ]
@@ -62,6 +74,34 @@ const superLike = () => {
 const dismiss = () => {
 
 }
+
+const filterUsersToShow = () => {
+    const passions = currentUser.passions.split('-')  
+    
+
+    const matchUsers = users.filter((user) => {
+        const hasEqualPassions =  passions.map((passion, index) => {
+            const passionInCommon = user.passions.includes(passion)
+            
+            if(passionInCommon){
+                return true
+            }
+        });
+
+        if(hasEqualPassions.includes(true)){
+            return user
+        }   
+    })
+
+    return matchUsers
+}
+
+
+const getUsersToShow = () => {
+    const users = filterUsersToShow()
+    return users[0];
+
+}
 </script>
 
 
@@ -76,7 +116,7 @@ const dismiss = () => {
         <VIconButton icon="fa-filter"/>
     </header>
     <div class="discover-content">
-        <el-carousel
+        <!-- <el-carousel
             height="300px"
             direction="vertical"
             :autoplay="false"
@@ -88,7 +128,8 @@ const dismiss = () => {
                 <span>Profession</span>
             </div>
         </el-carousel-item>
-    </el-carousel>
+    </el-carousel> -->
+    <userCarousel :user="getUsersToShow()" />
     </div>
     <div class="discover-buttons">
         <VIconButton class="cancel-button" icon="fa-solid fa-xmark" @click="dismiss"/>
