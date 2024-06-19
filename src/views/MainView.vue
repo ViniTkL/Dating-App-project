@@ -81,7 +81,6 @@ fetchUsers()
 
 
 const getUsersToShow =  computed( () => {
-    console.info(users.value[matchStore.getCurrentUserIndex], matchStore.getCurrentUserIndex)
     return users.value[matchStore.getCurrentUserIndex]
 })
 
