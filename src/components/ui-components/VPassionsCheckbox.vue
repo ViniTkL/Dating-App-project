@@ -73,9 +73,6 @@ const passions = [{
         }                                    
     ]
 
-const receba = (a) => {
-    alert(a)
-} 
 
 const checkboxInput = (passion) => {
     let {description, selected} = passion
