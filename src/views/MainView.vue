@@ -2,16 +2,20 @@
 import VIconButton from '@/components/ui-components/VIconButton.vue';
 import userCarousel from '@/components/ui-components/userCarousel.vue';
 import { useRouter } from 'vue-router';
-import {useUserStore} from "@/stores/user"
+import { useUserStore } from "@/stores/user"
+import { useMatchStore } from "@/stores/match"
 import { computed, onBeforeMount, onMounted } from 'vue';
 import { ref } from 'vue';
 
 const store = useUserStore();
 
+const matchStore = useMatchStore();
+
 const router = useRouter();
 
-const currentUser = store.getUser
+const hasMoreUsers = ref(true) 
 
+const currentUser = store.getUser
 
 const users = ref([])
 
@@ -20,16 +24,26 @@ const goToPreviousPage = () => {
 }
 
 const like = () => {
-    router.push("/match")
+    getNextUser()
+    // router.push("/match")
 }
 
 const superLike = () => {
-    router.push("/match")
+    getNextUser()
+    // router.push("/match")
 }
 
 const dismiss = () => {
-
+    getNextUser()
 }
+
+const getNextUser = () => {
+    if(users.value.length - 1 >= (matchStore.getCurrentUserIndex + 1)){
+        matchStore.nextUserIndex();
+    }else{
+        matchStore.noMoreUsers()
+    }
+}  
 
 const fetchUsers =  async () => {
     await store.fetchUsers()
@@ -60,14 +74,17 @@ const filterUsersToShow = () => {
         }   
     })
     
-    users.value = matchUsers[0]
+    users.value = matchUsers
 }
 
-const getUsersToShow =  computed(() => {
-   return users
+fetchUsers()
+
+
+const getUsersToShow =  computed( () => {
+    console.info(users.value[matchStore.getCurrentUserIndex], matchStore.getCurrentUserIndex)
+    return users.value[matchStore.getCurrentUserIndex]
 })
 
-fetchUsers()
 </script>
 
 
@@ -82,7 +99,8 @@ fetchUsers()
         <VIconButton icon="fa-filter"/>
     </header>
     <div class="discover-content">
-    <userCarousel :user="users" />
+    <userCarousel :user="getUsersToShow" v-if="matchStore.getHasMoreUsers"/>
+    <p class="empty-carousel" v-else>Não há mais usuários para serem listados</p>
     </div>
     <div class="discover-buttons">
         <VIconButton class="cancel-button" icon="fa-solid fa-xmark" @click="dismiss"/>
@@ -141,6 +159,14 @@ h1{
 
 .discover-content{
     width: 100%;
+}
+
+.empty-carousel{
+    text-align: center;
+    font-size: 20px;
+    margin: 1em;
+    color: black;
+    font-weight: 600;
 }
 
 .discover-content img{
