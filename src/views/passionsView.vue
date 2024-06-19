@@ -19,7 +19,7 @@ const finishSingUp = async () => {
 }
 
 const goToNextPage = () => {
-    router.push('/home')
+    router.push('/sign-in')
 }
 
 const goToPreviousPage = () => {

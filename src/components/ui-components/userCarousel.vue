@@ -1,5 +1,10 @@
 <script setup>
+import { onMounted } from 'vue';
 const props = defineProps(['user'])
+
+onMounted( async () => {
+    console.info("teste", props.user)
+})
 </script>
 
 <template>
@@ -11,7 +16,7 @@ const props = defineProps(['user'])
         <el-carousel-item v-for="item in 4" :key="item">
             <img class="user-img" src="../../assets/onboard-image-02.png" alt="">
             <div class="user-info">
-                <p>{{user.first_name + " " + user.last_name}}, {{ user.age }}</p>
+                <p>{{user.first_name + " " + user.last_name}}</p>
                 <span>{{ user.profession}}</span>
             </div>
         </el-carousel-item>
