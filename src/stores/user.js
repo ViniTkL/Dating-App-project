@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', () => {
     const authToken = ref('');
     const passions = ref([]);
     const newUser = ref(false);
+    const usersArray = ref([])
 
     const passionSelected = (passion, isSelected) => {
         if(!isSelected){
@@ -67,9 +68,9 @@ export const useUserStore = defineStore('user', () => {
       },            
   })
 
-  const usersArray = await response.json();
+  usersArray.value = await response.json();
 
-  return usersArray
+  return usersArray.value
 }
 
 
@@ -89,6 +90,8 @@ export const useUserStore = defineStore('user', () => {
 
   const getUser = computed(() => user.value)
 
+  const getUsers = computed(() => usersArray.value)
 
-  return { passions, authToken, getUser, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser, fetchUsers }
+
+  return { passions, authToken, getUser, getUsers, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser, fetchUsers }
 })
