@@ -3,6 +3,8 @@ import VIconButton from '@/components/ui-components/VIconButton.vue';
 import userCarousel from '@/components/ui-components/userCarousel.vue';
 import { useRouter } from 'vue-router';
 import {useUserStore} from "@/stores/user"
+import { onMounted } from 'vue';
+import { ref } from 'vue';
 
 const store = useUserStore();
 
@@ -10,54 +12,62 @@ const router = useRouter();
 
 const currentUser = store.getUser
 
-const users = [
-    {
-        email: 'teste@gmail.com',
-        profession: 'Engineer',
-        first_name: 'Rebeca',
-        last_name: 'Sander',
-        gender:'woman',
-        age: 24,
-        passions: ["Photography", "Shopping", "Karaoke"]
-    },
-    {
-        email: 'teste2@gmail.com',
-        profession: 'Police officer',
-        first_name: 'Cleber',
-        last_name: 'Rocha',
-        gender:'man',
-        age: 30,
-        passions: ["Gym", "Drink", "Art", "Music"]
-    },
-    {
-        email: 'teste3@gmail.com',
-        profession: 'Mecanical',
-        first_name: 'Ana',
-        last_name: 'Souza',
-        gender:'woman',
-        age: 25,
-        passions: ["Gym", "Swimming", "Art", "Extreme"]
-    },
-    {
-        email: 'teste5@gmail.com',
-        profession: 'Artist',
-        first_name: 'Andressa',
-        last_name: 'Lima',
-        gender:'woman',
-        age: 22,
-        passions: ["Gym", "Swimming", "Traveling", "Extreme"]
-    },
-    {
-        email: 'teste6@gmail.com',
-        profession: 'Pilot',
-        first_name: 'Jonas',
-        last_name: 'Humberto',
-        gender:'man',
-        age: 23,
-        passions: ["Cooking", "Gym", "Traveling"]
-    }
-]
+const users2 = ref([])
 
+// const users = [
+//     {
+//         email: 'teste@gmail.com',
+//         profession: 'Engineer',
+//         first_name: 'Rebeca',
+//         last_name: 'Sander',
+//         gender:'woman',
+//         age: 24,
+//         passions: ["Photography", "Shopping", "Karaoke"]
+//     },
+//     {
+//         email: 'teste2@gmail.com',
+//         profession: 'Police officer',
+//         first_name: 'Cleber',
+//         last_name: 'Rocha',
+//         gender:'man',
+//         age: 30,
+//         passions: ["Gym", "Drink", "Art", "Music"]
+//     },
+//     {
+//         email: 'teste3@gmail.com',
+//         profession: 'Mecanical',
+//         first_name: 'Ana',
+//         last_name: 'Souza',
+//         gender:'woman',
+//         age: 25,
+//         passions: ["Gym", "Swimming", "Art", "Extreme"]
+//     },
+//     {
+//         email: 'teste5@gmail.com',
+//         profession: 'Artist',
+//         first_name: 'Andressa',
+//         last_name: 'Lima',
+//         gender:'woman',
+//         age: 22,
+//         passions: ["Gym", "Swimming", "Traveling", "Extreme"]
+//     },
+//     {
+//         email: 'teste6@gmail.com',
+//         profession: 'Pilot',
+//         first_name: 'Jonas',
+//         last_name: 'Humberto',
+//         gender:'man',
+//         age: 23,
+//         passions: ["Cooking", "Gym", "Traveling"]
+//     }
+// ]
+
+const users = ref([])
+
+onMounted(async () => {
+    await fetchUsers()
+    getUsersToShow()
+})
 
 const goToPreviousPage = () => {
     router.push('/on-board');
@@ -68,39 +78,58 @@ const like = () => {
 }
 
 const superLike = () => {
-
+    router.push("/match")
 }
 
 const dismiss = () => {
 
 }
 
+const fetchUsers = async () => {
+    try{
+        const data = await store.fetchUsers()
+        setUsers(data)
+    } catch(error){
+        console.error(error)
+    }
+}
+
+const setUsers = (users) => {
+    users2.value = users
+}
+
 const filterUsersToShow = () => {
+
     const passions = currentUser.passions.split('-')  
     
 
-    const matchUsers = users.filter((user) => {
+    const matchUsers = users2.value.filter((user) => {
+        const cuzinho123 = user.passions.split('-')
+        console.info("cu",cuzinho123)
         const hasEqualPassions =  passions.map((passion, index) => {
-            const passionInCommon = user.passions.includes(passion)
+            const passionInCommon = cuzinho123.includes(passion)
             
+            console.info(passionInCommon)
             if(passionInCommon){
                 return true
             }
         });
 
+        console.info(hasEqualPassions)
         if(hasEqualPassions.includes(true)){
             return user
         }   
     })
-
+    
+    console.info(matchUsers)
     return matchUsers
 }
 
 
-const getUsersToShow = () => {
-    const users = filterUsersToShow()
-    return users[0];
-
+const getUsersToShow = async () => {
+    const users = await filterUsersToShow()
+    users.value =  users[0];
+    console.info(users.value)
 }
 </script>
 
@@ -129,7 +158,7 @@ const getUsersToShow = () => {
             </div>
         </el-carousel-item>
     </el-carousel> -->
-    <userCarousel :user="getUsersToShow()" />
+    <userCarousel :user="users" />
     </div>
     <div class="discover-buttons">
         <VIconButton class="cancel-button" icon="fa-solid fa-xmark" @click="dismiss"/>

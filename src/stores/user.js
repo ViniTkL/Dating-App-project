@@ -53,13 +53,25 @@ export const useUserStore = defineStore('user', () => {
           "Content-type": "application/json"
         },            
     })
-
-    
+ 
     newUser.value = await response.json();
 
     return newUser.value.email ?  false : true 
-
   }
+
+  const fetchUsers = async () => {
+    const response = await fetch('http://localhost:3000/show-users', {
+      method: 'GET',
+      headers: {
+        "Content-type": "application/json"
+      },            
+  })
+
+  const usersArray = await response.json();
+
+  return usersArray
+}
+
 
   const saveUser = (userInfo) => {
     user.value = userInfo
@@ -70,12 +82,13 @@ export const useUserStore = defineStore('user', () => {
   }
     
   const savePassions = () => {
-        user.value.passions = passions.value;
+      user.value.passions = passions.value;
   }
    
   const getUserFullName = () =>  `${user.value.first_name} ${user.value.last_name}`
 
   const getUser = computed(() => user.value)
 
-  return { passions, authToken, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser, getUser }
+
+  return { passions, authToken, getUser, passionSelected, getUserFullName, saveUser, saveGender, savePassions, createUser, logIn, isNewuser, fetchUsers }
 })
