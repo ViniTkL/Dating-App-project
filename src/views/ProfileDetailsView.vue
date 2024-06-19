@@ -107,9 +107,10 @@ const isUpperCase = (password) => {
 
 const saveProfilePictue = (file) => {
     const photo = file.target.files[0]
-
+    userInfos.value.pf_picture = photo
     if(photo.name.includes(".jpg") || photo.name.includes(".png")){
         addPhoto(reader);
+        reader.readAsDataURL(photo)
         return
     }
 
@@ -118,7 +119,7 @@ const saveProfilePictue = (file) => {
 
 const addPhoto = (reader) => {
     reader.onload = () => {
-        userInfos.value.pf_picture = reader.result
+        imageUrl.value = reader.result
     }
 }
 
@@ -129,7 +130,7 @@ const addPhoto = (reader) => {
     <form class="profile-detail-container" :class="{unfocused: isCalendarOpen}">
             <h2>Profile Details</h2>
             <div class="user-profile-picture">
-                <img class="user-image"  :src="userInfos.pf_picture" alt="foto">
+                <img class="user-image"  :src="imageUrl" alt="foto">
                 <label for="user-image"><el-icon><CameraFilled /></el-icon></label>
                 <input type="file" name="user-image" id="user-image" @change="saveProfilePictue">
             </div>
