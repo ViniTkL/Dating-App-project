@@ -22,6 +22,7 @@ const calendar = ref('');
 
 const isCalendarOpen = ref(false);
 
+const reader = new FileReader();
 
 const imageUrl = ref('')
 
@@ -105,15 +106,20 @@ const isUpperCase = (password) => {
 }
 
 const saveProfilePictue = (file) => {
-    const photo = file.target.value
+    const photo = file.target.files[0]
 
-    console.log(photo)
-    if(photo.includes(".jpg") || photo.includes(".png")){
-        userInfos.value.pf_picture = photo;
+    if(photo.name.includes(".jpg") || photo.name.includes(".png")){
+        addPhoto(reader);
         return
     }
 
     alert('Foto de perfil inválida')
+}
+
+const addPhoto = (reader) => {
+    reader.onload = () => {
+        userInfos.value.pf_picture = reader.result
+    }
 }
 
 </script>
