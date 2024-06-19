@@ -22,6 +22,7 @@ const calendar = ref('');
 
 const isCalendarOpen = ref(false);
 
+const reader = new FileReader();
 
 const imageUrl = ref('')
 
@@ -105,15 +106,21 @@ const isUpperCase = (password) => {
 }
 
 const saveProfilePictue = (file) => {
-    const photo = file.target.value
-
-    console.log(photo)
-    if(photo.includes(".jpg") || photo.includes(".png")){
-        userInfos.value.pf_picture = photo;
+    const photo = file.target.files[0]
+    userInfos.value.pf_picture = photo
+    if(photo.name.includes(".jpg") || photo.name.includes(".png")){
+        addPhoto(reader);
+        reader.readAsDataURL(photo)
         return
     }
 
     alert('Foto de perfil inválida')
+}
+
+const addPhoto = (reader) => {
+    reader.onload = () => {
+        imageUrl.value = reader.result
+    }
 }
 
 </script>
@@ -123,7 +130,7 @@ const saveProfilePictue = (file) => {
     <form class="profile-detail-container" :class="{unfocused: isCalendarOpen}">
             <h2>Profile Details</h2>
             <div class="user-profile-picture">
-                <img class="user-image"  :src="userInfos.pf_picture" alt="foto">
+                <img class="user-image"  :src="imageUrl" alt="foto">
                 <label for="user-image"><el-icon><CameraFilled /></el-icon></label>
                 <input type="file" name="user-image" id="user-image" @change="saveProfilePictue">
             </div>
