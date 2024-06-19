@@ -88,7 +88,7 @@ const verifyPassword = (password) => {
         return true
     }
 
-    alert('Senha inválida');
+    alert('Senha inválida, Ela dever conter no Mínimo: 1 Carater maiusculo, 1 carater minúsculo, 1 número e 1 carater espacial(@, !, etc...)');
     return false
 }
 

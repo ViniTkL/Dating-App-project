@@ -1,10 +1,7 @@
 <script setup>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 const props = defineProps(['user'])
 
-onMounted( async () => {
-    console.info("teste", props.user)
-})
 </script>
 
 <template>
@@ -17,15 +14,14 @@ onMounted( async () => {
             <img class="user-img" src="../../assets/onboard-image-02.png" alt="">
             <div class="user-info">
                 <p>{{user.first_name + " " + user.last_name}}</p>
-                <span>{{ user.profession}}</span>
             </div>
         </el-carousel-item>
     </el-carousel>
 </template>
 
-<style scoped>
+<style>
 
-img{
+.user-img{
     height: 350px;
     border-radius: 16px;
 }
@@ -45,8 +41,8 @@ img{
     align-items: center;
     gap: 20px;
 }
-
-.discover-content .user-info{
+ 
+.user-info{
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -60,26 +56,26 @@ img{
     background-color: rgba(51, 48, 48, 0.2);
 }
 
-.discover-content .user-info > p {
+.user-info > p {
     color: #FFFFFF;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
 }
 
-.discover-content .user-info > span {
+.user-info > span {
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 400;
 }
 
-.discover-content .user-info > .blur-bg{
+.user-info > .blur-bg{
     background-color: #E8E6EA;
     width: 295px;
     height: 60px;
     filter: blur(5px);
 }
 
-.discover-content .el-carousel__button{
+li.el-carousel__indicator > .el-carousel__button{
     border: 1px solid #E8E6EA;
     border-radius: 50%;
     height: 8px;
@@ -87,16 +83,16 @@ img{
     background-color: #E8E6EA;
   }
 
-  .discover-content ul.el-carousel__indicators{
+  ul.el-carousel__indicators{
     background-color: #FFFFFF26;
     border-radius: 16px;
   }
 
-  .discover-content ul.el-carousel__indicators.el-carousel__indicators--vertical.el-carousel__indicators--right{
+  ul.el-carousel__indicators.el-carousel__indicators--vertical.el-carousel__indicators--right{
     right: 20%
   }
 
-  .discover-content .el-carousel__indicator.is-active > button{
+  .el-carousel__indicator.is-active > button{
     background-color: #FFFFFF;
     border: 1px solid #FFFFFF;
   }

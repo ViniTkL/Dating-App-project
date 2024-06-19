@@ -3,7 +3,7 @@ import VIconButton from '@/components/ui-components/VIconButton.vue';
 import userCarousel from '@/components/ui-components/userCarousel.vue';
 import { useRouter } from 'vue-router';
 import {useUserStore} from "@/stores/user"
-import { onMounted } from 'vue';
+import { computed, onBeforeMount, onMounted } from 'vue';
 import { ref } from 'vue';
 
 const store = useUserStore();
@@ -12,62 +12,8 @@ const router = useRouter();
 
 const currentUser = store.getUser
 
-const users2 = ref([])
-
-// const users = [
-//     {
-//         email: 'teste@gmail.com',
-//         profession: 'Engineer',
-//         first_name: 'Rebeca',
-//         last_name: 'Sander',
-//         gender:'woman',
-//         age: 24,
-//         passions: ["Photography", "Shopping", "Karaoke"]
-//     },
-//     {
-//         email: 'teste2@gmail.com',
-//         profession: 'Police officer',
-//         first_name: 'Cleber',
-//         last_name: 'Rocha',
-//         gender:'man',
-//         age: 30,
-//         passions: ["Gym", "Drink", "Art", "Music"]
-//     },
-//     {
-//         email: 'teste3@gmail.com',
-//         profession: 'Mecanical',
-//         first_name: 'Ana',
-//         last_name: 'Souza',
-//         gender:'woman',
-//         age: 25,
-//         passions: ["Gym", "Swimming", "Art", "Extreme"]
-//     },
-//     {
-//         email: 'teste5@gmail.com',
-//         profession: 'Artist',
-//         first_name: 'Andressa',
-//         last_name: 'Lima',
-//         gender:'woman',
-//         age: 22,
-//         passions: ["Gym", "Swimming", "Traveling", "Extreme"]
-//     },
-//     {
-//         email: 'teste6@gmail.com',
-//         profession: 'Pilot',
-//         first_name: 'Jonas',
-//         last_name: 'Humberto',
-//         gender:'man',
-//         age: 23,
-//         passions: ["Cooking", "Gym", "Traveling"]
-//     }
-// ]
 
 const users = ref([])
-
-onMounted(async () => {
-    await fetchUsers()
-    getUsersToShow()
-})
 
 const goToPreviousPage = () => {
     router.push('/on-board');
@@ -85,52 +31,43 @@ const dismiss = () => {
 
 }
 
-const fetchUsers = async () => {
-    try{
-        const data = await store.fetchUsers()
-        setUsers(data)
-    } catch(error){
-        console.error(error)
-    }
+const fetchUsers =  async () => {
+    await store.fetchUsers()
+    setUsers()
+    filterUsersToShow()
 }
 
-const setUsers = (users) => {
-    users2.value = users
+const setUsers = () => {
+    users.value = store.getUsers
 }
 
 const filterUsersToShow = () => {
 
     const passions = currentUser.passions.split('-')  
     
-
-    const matchUsers = users2.value.filter((user) => {
-        const cuzinho123 = user.passions.split('-')
-        console.info("cu",cuzinho123)
+    const matchUsers = users.value.filter((user) => {
+        const userPassion = user.passions.split('-')
         const hasEqualPassions =  passions.map((passion, index) => {
-            const passionInCommon = cuzinho123.includes(passion)
+            const passionInCommon = userPassion.includes(passion)
             
-            console.info(passionInCommon)
             if(passionInCommon){
                 return true
             }
         });
 
-        console.info(hasEqualPassions)
         if(hasEqualPassions.includes(true)){
             return user
         }   
     })
     
-    console.info(matchUsers)
-    return matchUsers
+    users.value = matchUsers[0]
 }
 
+const getUsersToShow =  computed(() => {
+   return users
+})
 
-const getUsersToShow = async () => {
-    const users = await filterUsersToShow()
-    users.value =  users[0];
-    console.info(users.value)
-}
+fetchUsers()
 </script>
 
 
@@ -145,19 +82,6 @@ const getUsersToShow = async () => {
         <VIconButton icon="fa-filter"/>
     </header>
     <div class="discover-content">
-        <!-- <el-carousel
-            height="300px"
-            direction="vertical"
-            :autoplay="false"
-    >
-        <el-carousel-item v-for="item in 4" :key="item">
-            <img class="user-img" src="../assets/onboard-image-02.png" alt="">
-            <div class="user-info">
-                <p>name, age ,{{ item }}</p>
-                <span>Profession</span>
-            </div>
-        </el-carousel-item>
-    </el-carousel> -->
     <userCarousel :user="users" />
     </div>
     <div class="discover-buttons">
@@ -223,77 +147,6 @@ h1{
     height: 350px;
     border-radius: 16px;
 }
-
-.el-carousel__container{
-    position: relative;
-    top: 80px;
-}
-
-.el-carousel__item{
-    display: none;
-  }
-
-.el-carousel__item.is-active{
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    gap: 20px;
-}
-
-.discover-content .user-info{
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    position: relative;
-    bottom: 80px;
-    background-color: transparent;
-    width: 226px;
-    height: 60px;
-    border-bottom-right-radius: 16px;
-    border-bottom-left-radius: 16px;
-    background-color: rgba(51, 48, 48, 0.2);
-}
-
-.discover-content .user-info > p {
-    color: #FFFFFF;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.discover-content .user-info > span {
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.discover-content .user-info > .blur-bg{
-    background-color: #E8E6EA;
-    width: 295px;
-    height: 60px;
-    filter: blur(5px);
-}
-
-.discover-content .el-carousel__button{
-    border: 1px solid #E8E6EA;
-    border-radius: 50%;
-    height: 8px;
-    width: 8px;
-    background-color: #E8E6EA;
-  }
-
-  .discover-content ul.el-carousel__indicators{
-    background-color: #FFFFFF26;
-    border-radius: 16px;
-  }
-
-  .discover-content ul.el-carousel__indicators.el-carousel__indicators--vertical.el-carousel__indicators--right{
-    right: 20%
-  }
-
-  .discover-content .el-carousel__indicator.is-active > button{
-    background-color: #FFFFFF;
-    border: 1px solid #FFFFFF;
-  }
 
 .discover-buttons{
     display: flex;
